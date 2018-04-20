@@ -7,7 +7,7 @@ Feature: Singup in to imdb account
     Given I have user details for sign up <Email> <Password> <Name>
     When I input the user details and submit
     Then I should be able to see my account page
+#    And I should be able to relogin to my account adn logout
   Examples:
       | Email             | Password | Name |
       | Shaficemail       | test1234 | Shafic |
-      | AutoEmail         | test1234 | Sam |

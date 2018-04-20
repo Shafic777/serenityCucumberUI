@@ -1,11 +1,13 @@
 package com.shafic.test.pages;
 
 import net.serenitybdd.core.pages.PageObject;
+import net.thucydides.core.annotations.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class SignUpPage extends PageObject {
@@ -13,10 +15,6 @@ public class SignUpPage extends PageObject {
     private Map<String, String> data;
     private WebDriver driver;
     private int timeout = 15;
-
-    @FindBy(css = "a.list-group-item.create-account")
-    @CacheLookup
-    private WebElement createANewAccount;
 
     @FindBy(id = "ap_customer_name")
     @CacheLookup
@@ -38,6 +36,8 @@ public class SignUpPage extends PageObject {
     @CacheLookup
     private WebElement createNewAccount;
 
+    //td[@class='titleColumn']/a[text()='The Terror']
+
     public SignUpPage() {
     }
 
@@ -56,15 +56,7 @@ public class SignUpPage extends PageObject {
         this.timeout = timeout;
     }
 
-    /**
-     * Click on Create A New Account Link.
-     *
-     * @return the SignUpPage class instance.
-     */
-    public SignUpPage clickCreateANewAccountLink() {
-        createANewAccount.click();
-        return this;
-    }
+
     /**
      * Set default value to Reenter Password Password field.
      *
@@ -89,23 +81,24 @@ public class SignUpPage extends PageObject {
      *
      * @return the SignUpPage class instance.
      */
+    @Step
     public SignUpPage clickSubmit() {
         createNewAccount.click();
         return this;
     }
 
-
-
     /**
      * Fill every fields in the page.
      *
      * @return the SignUpPage class instance.
+     * @param map
      */
-    public SignUpPage fill() {
-        setYourNameTextField();
-        setEmailEmailField();
-        setPasswordPasswordField();
-        setReEnterPassword();
+    @Step
+    public SignUpPage fill(HashMap map) {
+        setYourNameTextField(map.get("name").toString());
+        setEmailEmailField(map.get("email").toString());
+        setPasswordPasswordField(map.get("password").toString());
+        setReEnterPassword(map.get("password").toString());
         return this;
     }
 
@@ -113,9 +106,11 @@ public class SignUpPage extends PageObject {
      * Fill every fields in the page and submit it to target page.
      *
      * @return the SignUpPage class instance.
+     * @param map
      */
-    public SignUpPage fillAndSubmit() {
-        fill();
+    @Step
+    public SignUpPage fillAndSubmit(HashMap map) {
+        fill(map);
         return clickSubmit();
     }
 

@@ -3,6 +3,8 @@ import java.util.Map;
 
 import net.serenitybdd.core.pages.PageObject;
 import net.thucydides.core.annotations.DefaultUrl;
+import net.thucydides.core.annotations.Step;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -26,6 +28,27 @@ public class HomePage extends PageObject {
     @FindBy(id = "nbusername")
     @CacheLookup
     private WebElement accountName;
+
+    @FindBy(xpath = "//*[@id=\"navUserMenu\"]/span")
+    @CacheLookup
+    private WebElement userMenu;
+
+    @FindBy(id = "nblogout")
+    @CacheLookup
+    private WebElement logOut;
+
+    @FindBy(id = "navTitleMenu")
+    @CacheLookup
+    private WebElement moviesAndTvShowsMenu;
+
+  /*  @FindBy(linkText = "Most Popular TV Shows")
+    @CacheLookup
+    private WebElement mostPopularTvShowsLink;*/
+
+    @FindBy(xpath = "//*[@id=\"navMenu1\"]/div[3]/ul[1]/li[3]/a")
+    @CacheLookup
+    private WebElement mostPopularTvShowsLink;
+
 
     private final String pageLoadedText = "Find showtimes, watch trailers, browse photos, track your Watchlist and rate your favorite movies and TV shows on your phone or tablet";
     private final String pageUrl = "https://www.imdb.com/";
@@ -52,7 +75,52 @@ public class HomePage extends PageObject {
      * Click on Other Sign In Options Link.
      *
      * @return the HomePage class instance.
+     * @param driver
      */
+    public HomePage accessMoivesAndTvShowsMenu(WebDriver driver) {
+        Actions action = new Actions(driver);
+        action.moveToElement(moviesAndTvShowsMenu).build().perform();
+        mostPopularTvShowsLink.click();
+        return this;
+    }
+
+    public HomePage accessMoivesAndTvShowsMenu() {
+        Actions action = new Actions(this.driver);
+        action.moveToElement(moviesAndTvShowsMenu).build().perform();
+        mostPopularTvShowsLink.click();
+        return this;
+    }
+
+    /**
+     * Click on Other Sign In Options Link.
+     *
+     * @return the HomePage class instance.
+     * @param driver
+     */
+    public HomePage clickOnMostPopularTvShows(WebDriver driver) {
+
+        accessMoivesAndTvShowsMenu(driver);
+
+        return this;
+    }
+
+    /**
+     * Click on Other Sign In Options Link.
+     *
+     * @return the HomePage class instance.
+     */
+    public HomePage clickUsermenu() {
+        userMenu.click();
+
+        return this;
+    }
+
+    /**
+     * Click on Other Sign In Options Link.
+     *
+     * @return the HomePage class instance.
+     */
+    @Step
     public HomePage clickOtherSignInOptionsLink() {
         otherSignInOptions.click();
         return this;
@@ -61,9 +129,24 @@ public class HomePage extends PageObject {
      * Get on Asda Link.
      *
      * @return the SignUpPage123 class instance.
+     * @param accountDetails
      */
-    public HomePage verifyAccountDetails() {
-        accountName.getText().contains("Shafic");
+    @Step
+    public HomePage verifyAccountDetails(String accountDetails) {
+        accountName.getText().contains(accountDetails);
+        return this;
+    }
+
+    /**
+     * Click on Log Out Link.
+     *
+     * @return the HomePage class instance.
+     */
+    @Step
+   public HomePage clickLogOutLink() {
+        clickUsermenu();
+        logOut.click();
+        waitForAngularRequestsToFinish();
         return this;
     }
 

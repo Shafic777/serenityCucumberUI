@@ -1,15 +1,18 @@
 package com.shafic.test.steps;
 
+import com.shafic.test.pages.MostWatchTVShowPage;
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import net.thucydides.core.annotations.ManagedPages;
 import net.thucydides.core.annotations.Steps;
 
 public class SearchMostWathedTVSeriesScenariosSteps  {
 
     @Steps
     UserSteps user;
+    MostWatchTVShowPage mp;
 
     String seriesName;
 
@@ -27,6 +30,6 @@ public class SearchMostWathedTVSeriesScenariosSteps  {
 
     @Then("^I should be able to find and see details of the series$")
     public void iShouldBeAbleToFindAndSeeDetailsOfTheSeries() throws Throwable {
-        user
+        mp.getdata();
     }
 }
